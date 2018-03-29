@@ -1,0 +1,7 @@
+struct Population {
+
+};
+
+class GeneticAlgorithm {
+
+};
