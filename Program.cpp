@@ -1,6 +1,11 @@
 #include "Program.h"
+#pragma once
 
 void Program::Run() {
-	MatrixGraph graph = MatrixGraphBuilder.Generate(20, true, 1, 20);
+	std::cout << "Odpalam program" << std::endl;
+	MatrixGraph graph = MatrixGraph::Generate(20, true, 1, 20);
 	graph.ToString();
+	std::cout << "Adres w Program: " << &graph << std::endl;
+	Algorithm *ga = new GeneticAlgorithm(&graph, 0.2, 0.8);
+	ga->SearchForBestPath();
 }

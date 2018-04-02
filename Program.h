@@ -1,5 +1,4 @@
-#include "./structures/MatrixGraph.h"
-#include "./structures/MartixGraphBuilder.h"
+#include "./controllers/GeneticAlgorithm.h"
 
 class Program {
 public:
