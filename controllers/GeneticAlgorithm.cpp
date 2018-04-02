@@ -17,14 +17,6 @@ std::vector<int> GeneticAlgorithm::PartiallyMatchedX(std::vector<int> firstParen
 void GeneticAlgorithm::SearchForBestPath() {
   std::cout << "Odpalam algorytm genetyczny" << std::endl;
   InitPopulation();
-
-  for(Individual individual : _population.IndividualList) {
-    for(int value : individual.Order) {
-      std::cout << value << " ";
-    }
-    std::cout << std::endl;
-    std::cout << "FitnessScore: " << individual.FitnessScore << std::endl;
-  }
   CalculateFitness();
   NormalizeFitness();
   GenerateNewPopulation();
@@ -34,20 +26,33 @@ void GeneticAlgorithm::InitPopulation() {
   Individual tempIndividual;
   for(int i = 0; i < matrix->getMatrixSize(); i++)
     tempIndividual.Order.push_back(i);
-  std::cout << "SIZE: " << _populationSize << std::endl;
+
   for(int i = 0; i < _populationSize; i++) {
     _population.IndividualList.push_back(tempIndividual);
   }
 }
 
 void GeneticAlgorithm::CalculateFitness() {
-  for(Individual individual : _population.IndividualList) {
-    //individual.FitnessScore
+  double temporaryDistance = 0.0;
+  for(Individual &individual : _population.IndividualList) {
+    temporaryDistance = CalculateDistance(individual.Order);
+    individual.FitnessScore = (1 / (temporaryDistance + 1));
+    if(temporaryDistance < _bestDist) {
+      _bestDist = temporaryDistance;
+      _bestPath = individual.Order;
+    }
   }
 }
 
 void GeneticAlgorithm::NormalizeFitness() {
+  double fitnessSum = 0;
+  for(Individual &individual : _population.IndividualList) {
+    fitnessSum += individual.FitnessScore;
+  }
 
+  for(Individual &individual : _population.IndividualList) {
+    individual.FitnessScore = (individual.FitnessScore / fitnessSum);
+  }
 }
 
 void GeneticAlgorithm::GenerateNewPopulation() {

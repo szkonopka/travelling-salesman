@@ -13,5 +13,5 @@ public:
   int getPivot(int size);
   int getRandNumbBeforePivot(int pivot);
   int getRandomNumbAfterPivot(int pivot);
-  int CalculateDistance(std::vector<std::vector<int> > matrix, int from, int to);
+  int CalculateDistance(std::vector<int> order);
 };

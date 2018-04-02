@@ -3,7 +3,7 @@
 
 struct Individual {
   std::vector<int> Order;
-  float FitnessScore;
+  double FitnessScore = 0.0;
 };
 
 struct Population {
@@ -33,9 +33,7 @@ private:
   int _bestDist;
 public:
   GeneticAlgorithm() {}
-  GeneticAlgorithm(MatrixGraph *matrix, int mutationRate, int crossoverRate) : Algorithm(matrix){
-    _populationSize = 100;
-  }
+  GeneticAlgorithm(MatrixGraph *matrix, int mutationRate, int crossoverRate) : Algorithm(matrix) { }
   virtual void SearchForBestPath();
 
   std::vector<int> OrderX(std::vector<int> firstParent, std::vector<int> secondParent);

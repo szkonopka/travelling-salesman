@@ -12,6 +12,11 @@ int Algorithm::getRandomNumbAfterPivot(int pivot) {
   return rand() % pivot + pivot;
 }
 
-int Algorithm::CalculateDistance(std::vector<std::vector<int> > matrix, int from, int to) {
-  return matrix[from][to];
+int Algorithm::CalculateDistance(std::vector<int> order) {
+  int distance = 0, i;
+  for(i = 0; i < order.size() - 1; i++) {
+    distance += matrix->getConnection(i, i + 1);
+  }
+  distance += matrix->getConnection(i, 0);
+  return distance;
 }

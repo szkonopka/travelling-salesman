@@ -6,6 +6,6 @@ void Program::Run() {
 	MatrixGraph graph = MatrixGraph::Generate(20, true, 1, 20);
 	graph.ToString();
 	std::cout << "Adres w Program: " << &graph << std::endl;
-	Algorithm *ga = new GeneticAlgorithm(&graph, 0.2, 0.8);
+	GeneticAlgorithm *ga = new GeneticAlgorithm(&graph, 0.2, 0.8);
 	ga->SearchForBestPath();
 }
