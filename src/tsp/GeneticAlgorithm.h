@@ -10,7 +10,7 @@ struct Population {
   std::vector<Individual> IndividualList;
 };
 
-enum CrossType {
+enum CrossoverType {
   OX, CX
 };
 
@@ -30,12 +30,17 @@ private:
   float _crossoverRate;
   Population _population;
   std::vector<int> _bestPath;
-  int _bestDist;
+  double _bestDist;
+  int _crossoverType = CrossoverType::OX;
+  int _mutationType = MutationType::Swap;
 public:
   GeneticAlgorithm() {}
-  GeneticAlgorithm(MatrixGraph *matrix, int mutationRate, int crossoverRate) : Algorithm(matrix) { }
+  GeneticAlgorithm(MatrixGraph *matrix, int mutationRate, int crossoverRate) : Algorithm(matrix) {
+    _mutationRate = mutationRate;
+    _crossoverRate = crossoverRate;
+  }
   virtual void SearchForBestPath();
-
+  void DisplaySolution();
   std::vector<int> OrderX(std::vector<int> firstParent, std::vector<int> secondParent);
   std::vector<int> CycleX(std::vector<int> firstParent, std::vector<int> secondParent);
   std::vector<int> PartiallyMatchedX(std::vector<int> firstParent, std::vector<int> secondParent);
@@ -43,6 +48,8 @@ public:
   void CalculateFitness();
   void NormalizeFitness();
   void GenerateNewPopulation();
+  void Mutate(std::vector<int> &individualr);
+  bool IsValueInVector(std::vector<int> vec, int value);
   std::vector<int> GreedySolution();
   std::vector<int> TournamentSelection();
   std::vector<int> RouletteSelection();

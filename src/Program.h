@@ -1,4 +1,4 @@
-#include "./controllers/GeneticAlgorithm.h"
+#include "./tsp/GeneticAlgorithm.h"
 
 class Program {
 public:

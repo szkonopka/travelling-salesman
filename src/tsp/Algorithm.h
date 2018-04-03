@@ -14,4 +14,7 @@ public:
   int getRandNumbBeforePivot(int pivot);
   int getRandomNumbAfterPivot(int pivot);
   int CalculateDistance(std::vector<int> order);
+  void Swap(std::vector<int> &individual, int indexA, int indexB);
+  std::vector<int> Insert(std::vector<int> individual, int indexA, int indexB);
+  std::vector<int> Invert(std::vector<int> individual, int indexA, int indexB);
 };

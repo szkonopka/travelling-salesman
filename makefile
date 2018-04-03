@@ -1,17 +1,32 @@
-Main: Main.o Program.o ./controllers/GeneticAlgorithm.o ./controllers/Algorithm.o ./structures/MatrixGraph.o
-	g++ Main.o Program.o ./controllers/GeneticAlgorithm.o ./controllers/Algorithm.o ./structures/MatrixGraph.o -o Main
+SRC_DIR=./src
+STRUCT_DIR=$(SRC_DIR)/structures
+TSP_DIR=$(SRC_DIR)/tsp
+OUT=Main
+TEST_DIR=tests
 
-Main.o: Main.cpp
-	g++ -c Main.cpp
+test:
+	make -C $(TEST_DIR)
 
-Program.o: Program.cpp Program.h
-	g++ -c Program.cpp
+test_clean:
+	make -C $(TEST_DIR) clear
 
-MatrixGraph.o: ./structures/MatrixGraph.cpp ./structures/MatrixGraph.cpp
-	g++ -c ./structures/MatrixGraph.cpp -std=c11
+Algorithm.o: $(TSP_DIR)/Algorithm.cpp $(TSP_DIR)/Algorithm.h
+	g++ -c -I$(TSP_DIR) $(TSP_DIR)/Algorithm.cpp -std=c11
 
-GeneticAlgorithm.o: ./controllers/GeneticAlgorithm.cpp ./controllers/GeneticAlgorithm.h
-	g++ -c ./controllers/GeneticAlgorithm.cpp ./controllers/GeneticAlgorithm.h -std=c11
+GeneticAlgorithm.o: $(TSP_DIR)/GeneticAlgorithm.cpp $(TSP_DIR)/GeneticAlgorithm.h
+	g++ -c -I$(TSP_DIR) $(TSP_DIR)/GeneticAlgorithm.cpp -std=c11
 
-Algorithm.o: ./controllers/Algorithm.cpp ./controllers/Algorithm.h
-	g++ -c ./controllers/Algorithm.cpp -std=c11
+MatrixGraph.o: $(STRUCT_DIR)/MatrixGraph.cpp $(STRUCT_DIR)/MatrixGraph.h
+	g++ -c -I$(STRUCT_DIR) $(STRUCT_DIR)/MatrixGraph.cpp -std=c11
+
+Program.o: $(SRC_DIR)/Program.cpp $(SRC_DIR)/Program.h
+	g++ -c -I$(SRC_DIR) $(SRC_DIR)/Program.cpp
+
+Main.o: $(SRC_DIR)/Main.cpp
+	g++ -c -I$(SRC_DIR) $(SRC_DIR)/Main.cpp
+
+Main: $(SRC_DIR)/Main.o $(SRC_DIR)/Program.o $(TSP_DIR)/GeneticAlgorithm.o $(TSP_DIR)/Algorithm.o $(STRUCT_DIR)/MatrixGraph.o
+	g++ -I$(SRC_DIR) $(SRC_DIR)/Main.o $(SRC_DIR)/Program.o $(TSP_DIR)/GeneticAlgorithm.o $(TSP_DIR)/Algorithm.o $(STRUCT_DIR)/MatrixGraph.o -o $(OUT)
+
+clean:
+	rm *.o $(SRC_DIR)/*.o $(TSP_DIR)/*.o $(STRUCT_DIR)/*.o $(OUT)
