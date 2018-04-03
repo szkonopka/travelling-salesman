@@ -4,10 +4,13 @@
 struct Individual {
   std::vector<int> Order;
   double FitnessScore = 0.0;
+  std::vector<int> getOrder() { return Order; }
+  double getFitness() { return FitnessScore; }
 };
 
 struct Population {
   std::vector<Individual> IndividualList;
+  Individual getIndividual(int index) { return IndividualList[index]; }
 };
 
 enum CrossoverType {
@@ -46,7 +49,7 @@ public:
   void CalculateFitness();
   void NormalizeFitness();
   void GenerateNewPopulation();
-  void Mutate(std::vector<int> &individualr);
+  void Mutate(std::vector<int> &individual);
   std::vector<int> GreedySolution();
   std::vector<int> TournamentSelection();
   std::vector<int> RouletteSelection();

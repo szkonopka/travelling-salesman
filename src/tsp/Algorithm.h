@@ -1,12 +1,19 @@
 #include <vector>
 #include <algorithm>
 #include "../structures/MatrixGraph.h"
+#include <stdlib.h>
+#include <ctime>
+#include <random>
 
 class Algorithm {
 protected:
+  template< class RealType = double >
+  class uniform_real_distribution;
+
   MatrixGraph *matrix = nullptr;
   std::vector<int> _bestPath;
   double _bestDist;
+  std::random_device rd;
 public:
   Algorithm() {}
   Algorithm(MatrixGraph *matrix) {
@@ -22,4 +29,5 @@ public:
   void Invert(std::vector<int> &individual, int indexA, int indexB);
   bool IsValueInVector(std::vector<int> vec, int value);
   std::vector<int> GreedySolution();
+  double RandomFromZeroToOne();
 };

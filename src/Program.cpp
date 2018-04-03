@@ -1,5 +1,4 @@
 #include "Program.h"
-#pragma once
 
 void Program::Run() {
 	std::cout << "Odpalam program" << std::endl;

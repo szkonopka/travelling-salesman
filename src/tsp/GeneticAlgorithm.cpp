@@ -43,10 +43,11 @@ std::vector<int> GeneticAlgorithm::PartiallyMatchedX(std::vector<int> firstParen
 
 void GeneticAlgorithm::SearchForBestPath() {
   InitPopulation();
+  CalculateFitness();
   for(int i = 0; i < 10000; i++) {
+    NormalizeFitness();
     GenerateNewPopulation();
     CalculateFitness();
-    NormalizeFitness();
   }
 }
 
@@ -93,13 +94,11 @@ void GeneticAlgorithm::NormalizeFitness() {
 void GeneticAlgorithm::GenerateNewPopulation() {
   Population newPopulation;
   Individual tempIndividual;
-
-  for(int i = 0; i < _populationSize - 1; i++) {
-    tempIndividual.Order = OrderX(_population.IndividualList[i].Order, _population.IndividualList[i + 1].Order);
+  for(int i = 0; i < _populationSize; i++) {
+    tempIndividual.Order = OrderX(RouletteSelection(), RouletteSelection());
     Mutate(tempIndividual.Order);
     newPopulation.IndividualList.push_back(tempIndividual);
   }
-  newPopulation.IndividualList.push_back(tempIndividual);
   _population = newPopulation;
 }
 
@@ -127,7 +126,14 @@ std::vector<int> GeneticAlgorithm::TournamentSelection() {
 }
 
 std::vector<int> GeneticAlgorithm::RouletteSelection() {
-
+  int i = 0;
+  double r = RandomFromZeroToOne();
+  while((r > (double)0) && (i < _populationSize - 1)) {
+    r = r - _population.getIndividual(i).getFitness();
+    i++;
+  }
+  i = i - 1;
+  return _population.getIndividual(i).getOrder();
 }
 
 void GeneticAlgorithm::DisplaySolution() {

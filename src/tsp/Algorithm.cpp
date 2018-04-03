@@ -79,3 +79,9 @@ std::vector<int> Algorithm::GreedySolution() {
   }
   return temporarySolution;
 }
+
+double Algorithm::RandomFromZeroToOne() {
+  std::mt19937 gen(rd());
+  std::uniform_real_distribution<> randomValue(0.0, 1.0);
+  return randomValue(gen);
+}
