@@ -29,20 +29,16 @@ std::vector<int> GeneticAlgorithm::OrderX(std::vector<int> firstParent, std::vec
   return child;
 }
 
-bool GeneticAlgorithm::IsValueInVector(std::vector<int> vec, int value) {
-  for(int _value : vec) {
-    if(_value == value)
-      return true;
-  }
-  return false;
-}
+
 
 std::vector<int> GeneticAlgorithm::CycleX(std::vector<int> firstParent, std::vector<int> secondParent) {
 
 }
 
 std::vector<int> GeneticAlgorithm::PartiallyMatchedX(std::vector<int> firstParent, std::vector<int> secondParent) {
-
+  int pivot = getPivot(firstParent.size());
+  int start = getRandNumbBeforePivot(pivot);
+  int end = getRandomNumbAfterPivot(pivot);
 }
 
 void GeneticAlgorithm::SearchForBestPath() {
@@ -57,9 +53,9 @@ void GeneticAlgorithm::SearchForBestPath() {
 void GeneticAlgorithm::InitPopulation() {
   Individual tempIndividual;
 
-  //for(int i = 0; i < matrix->getMatrixSize(); i++)
-  //    tempIndividual.Order.push_back(i);
-  tempIndividual.Order = GreedySolution();
+  for(int i = 0; i < matrix->getMatrixSize(); i++)
+    tempIndividual.Order.push_back(i);
+  //tempIndividual.Order = GreedySolution();
 
   for(int i = 0; i < _populationSize; i++) {
     _population.IndividualList.push_back(tempIndividual);
@@ -116,8 +112,10 @@ void GeneticAlgorithm::Mutate(std::vector<int> &individual) {
       Swap(individual, indexA, indexB);
       break;
     case MutationType::Insert:
+      Insert(individual, indexA, indexB);
       break;
     case MutationType::Invert:
+      Invert(individual, indexA, indexB);
       break;
     default:
       break;
@@ -130,31 +128,6 @@ std::vector<int> GeneticAlgorithm::TournamentSelection() {
 
 std::vector<int> GeneticAlgorithm::RouletteSelection() {
 
-}
-
-std::vector<int> GeneticAlgorithm::GreedySolution() {
-  std::vector<int> visited(matrix->getMatrixSize(), 0);
-  std::vector<int> temporarySolution(matrix->getMatrixSize(), 0);
-
-  for(int i = 0; i < temporarySolution.size(); i++)
-    temporarySolution[i] = i;
-
-  int counter = 0, i = 0, nextOne = 0, j = 0, tempBest = 99999999;
-  while(counter < visited.size()) {
-    nextOne = -1;
-    tempBest = 99999999;
-    for(j = 0; j < temporarySolution.size(); j++) {
-      if(visited[j] == 0 && tempBest > matrix -> getConnection(i, j)) {
-        tempBest = matrix -> getConnection(i, j);
-        nextOne = j;
-      }
-    }
-    visited[nextOne] = 1;
-    temporarySolution[counter] = nextOne;
-    i = nextOne;
-    counter++;
-  }
-  return temporarySolution;
 }
 
 void GeneticAlgorithm::DisplaySolution() {
