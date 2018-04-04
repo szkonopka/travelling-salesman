@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <ctime>
 #include <random>
+#include <climits>
 
 class Algorithm {
 protected:
@@ -12,7 +13,7 @@ protected:
 
   MatrixGraph *matrix = nullptr;
   std::vector<int> _bestPath;
-  double _bestDist;
+  double _bestDist = INT_MAX;
   std::random_device rd;
 public:
   Algorithm() {}
@@ -30,4 +31,5 @@ public:
   bool IsValueInVector(std::vector<int> vec, int value);
   std::vector<int> GreedySolution();
   double RandomFromZeroToOne();
+  void DisplaySolution();
 };
