@@ -107,8 +107,15 @@ void GeneticAlgorithm::GenerateNewPopulation()
   {
     if(_crossoverRate > RandomFromZeroToOne())
     {
-      tempIndividual.Order = OrderCrossover(RouletteSelection(), RouletteSelection());
-      //std::cout << "CROSS" << std::endl;
+      switch(_crossoverType)
+      {
+        case CrossoverType::OX:
+          tempIndividual.Order = OrderCrossover(RouletteSelection(), RouletteSelection());
+          break;
+        case CrossoverType::PMX:
+          tempIndividual.Order = PartiallyMatchedCrossover(RouletteSelection(), RouletteSelection());
+          break;
+      }
     }
     else
     {
@@ -125,12 +132,10 @@ void GeneticAlgorithm::GenerateNewPopulation()
 void GeneticAlgorithm::Mutate(std::vector<int> &individual)
 {
   double probability = RandomFromZeroToOne();
-  if(_mutationRate < probability) {
-    //std::cout << probability << " > " << _mutationRate << std::endl;
-    return;
-  }
 
-  //std::cout << "MUTACJA";
+  if(_mutationRate < probability)
+    return;
+
   int indexA, indexB;
   indexA = rand() % (individual.size() - 1) + 0;
   indexB = rand() % (individual.size() - 1) + 0;
@@ -193,6 +198,40 @@ std::vector<int> GeneticAlgorithm::PartiallyMatchedCrossover(std::vector<int> fi
   int pivot = getPivot(firstParent.size());
   int start = getRandNumbBeforePivot(pivot);
   int end = getRandomNumbAfterPivot(pivot);
+
+  std::vector<int> child(firstParent.size(), -1);
+  std::vector<int> firstCrossSpace((end - start), 0);
+  std::vector<int> secondCrossSpace((end - start), 0);
+
+  for(int i = start; i < end; i++)
+  {
+    child[i] = secondParent[i];
+    firstCrossSpace[i - start] = firstParent[i];
+    secondCrossSpace[i - start] = secondParent[i];
+  }
+
+  for(int i = 0; i < child.size(); i++)
+  {
+      if(!IsValueInVector(firstCrossSpace, firstParent[i]) && !IsValueInVector(child, firstParent[i]))
+      {
+        child[i] = firstParent[i];
+      }
+  }
+
+  int j = 0;
+
+  for(int i = 0; i < child.size(); i++)
+  {
+    if(child[i] == -1)
+    {
+      while(IsValueInVector(child, firstCrossSpace[j]))
+        j++;
+
+      child[i] = firstCrossSpace[j];
+    }
+  }
+
+  return child;
 }
 
 std::vector<int> GeneticAlgorithm::TournamentSelection()

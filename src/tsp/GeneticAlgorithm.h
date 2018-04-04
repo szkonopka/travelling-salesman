@@ -14,7 +14,7 @@ struct Population {
 };
 
 enum CrossoverType {
-  OX, CX
+  OX, CX, PMX
 };
 
 enum MutationType {
@@ -37,7 +37,7 @@ private:
   double _crossoverRate;
   double _newPopulationSelectionRate = 1.0;
   Population _population;
-  int _crossoverType = CrossoverType::OX;
+  int _crossoverType = CrossoverType::PMX;
   int _mutationType = MutationType::Swap;
   int _populationInitType = PopulationInitType::SimilarOrdered;
   void InitPopulation();
