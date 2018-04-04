@@ -115,6 +115,9 @@ void GeneticAlgorithm::GenerateNewPopulation()
         case CrossoverType::PMX:
           tempIndividual.Order = PartiallyMatchedCrossover(RouletteSelection(), RouletteSelection());
           break;
+        case CrossoverType::CX:
+          tempIndividual.Order = CycleCrossover(RouletteSelection(), RouletteSelection());
+          break;
       }
     }
     else
@@ -190,7 +193,36 @@ std::vector<int> GeneticAlgorithm::OrderCrossover(std::vector<int> firstParent, 
 
 std::vector<int> GeneticAlgorithm::CycleCrossover(std::vector<int> firstParent, std::vector<int> secondParent)
 {
+  int i = 0;
+  int first = firstParent[i], second = secondParent[i], currentPosition, currentIndex;
+  std::vector<int> child(firstParent.size(), -1);
 
+  while(first == second)
+  {
+    i++;
+    first = firstParent[i], second = secondParent[i];
+    if(i == child.size())
+      return firstParent;
+  }
+
+  currentPosition = second;
+  currentIndex = i;
+  child[currentIndex] = firstParent[currentIndex];
+
+  while(first != currentPosition)
+  {
+    currentIndex = IndexOf(firstParent, currentPosition);
+    currentPosition = secondParent[currentIndex];
+    child[currentIndex] = firstParent[currentIndex];
+  }
+
+  for(int i = 0; i < child.size(); i++)
+  {
+    if(child[i] == -1)
+      child[i] = secondParent[i];
+  }
+
+  return child;
 }
 
 std::vector<int> GeneticAlgorithm::PartiallyMatchedCrossover(std::vector<int> firstParent, std::vector<int> secondParent)

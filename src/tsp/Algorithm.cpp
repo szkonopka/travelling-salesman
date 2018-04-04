@@ -15,6 +15,15 @@ int Algorithm::getRandomNumbAfterPivot(int pivot)
   return rand() % pivot + pivot;
 }
 
+int Algorithm::IndexOf(std::vector<int> vec, int value)
+{
+  for(int i = 0; i < vec.size(); i++)
+    if(vec[i] == value)
+      return i;
+
+  return 0;
+}
+
 int Algorithm::CalculateDistance(std::vector<int> order)
 {
   int distance = 0, i;

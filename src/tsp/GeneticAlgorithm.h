@@ -37,7 +37,7 @@ private:
   double _crossoverRate;
   double _newPopulationSelectionRate = 1.0;
   Population _population;
-  int _crossoverType = CrossoverType::PMX;
+  int _crossoverType = CrossoverType::CX;
   int _mutationType = MutationType::Swap;
   int _populationInitType = PopulationInitType::SimilarOrdered;
   void InitPopulation();
