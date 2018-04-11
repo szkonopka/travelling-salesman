@@ -24,6 +24,8 @@ public:
   int getPivot(int size);
   int getRandNumbBeforePivot(int pivot);
   int getRandomNumbAfterPivot(int pivot);
+  std::vector<int> getBestPath();
+  double getBestDist();
   int CalculateDistance(std::vector<int> order);
   int IndexOf(std::vector<int> vec, int value);
   void Swap(std::vector<int> &individual, int indexA, int indexB);

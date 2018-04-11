@@ -133,3 +133,7 @@ void Algorithm::DisplaySolution()
   }
   std::cout << std::endl;
 }
+
+double Algorithm::getBestDist() { return _bestDist; }
+
+std::vector<int> Algorithm::getBestPath() { return _bestPath; }
