@@ -17,10 +17,6 @@ enum CrossoverType {
   OX, CX, PMX
 };
 
-enum MutationType {
-  Invert, Insert, Swap
-};
-
 enum SelectionType {
   Tournament, Roulette
 };
@@ -46,7 +42,8 @@ private:
   void GenerateNewPopulation();
 public:
   GeneticAlgorithm() {}
-  GeneticAlgorithm(MatrixGraph *matrix, double mutationRate, double crossoverRate) : Algorithm(matrix) {
+  GeneticAlgorithm(MatrixGraph *matrix, double mutationRate, double crossoverRate) : Algorithm(matrix)
+  {
     _mutationRate = mutationRate;
     _crossoverRate = crossoverRate;
   }

@@ -1,20 +1,21 @@
 #include "Algorithm.h"
 #include "../structures/TabuList.h"
 
-enum NeighborType {
-  Invert, Insert, Swap
-};
-
-class TabuSearch : Algorithm {
+class TabuSearchAlgorithm : virtual public Algorithm {
 private:
-  std::vector<std::vector<int> > _tabuList;
+  TabuList *_tabuList;
   int _stepsAmount = 1000;
   double _bestPathFitness;
-  NeighborType _neighborType = NeighborType::Swap;
+  MutationType _mutationType = MutationType::Swap;
 public:
+  TabuSearchAlgorithm() { }
+  TabuSearchAlgorithm(MatrixGraph *matrix) : Algorithm(matrix)
+  {
+    _tabuList = new TabuList(10, matrix -> getMatrixSize());
+  }
   virtual void SearchForBestPath();
   void InitSolution();
-  void NewNeighborhood();
+  std::vector<int> NewNeighborhood(std::vector<int> solution);
   void Diversification();
-  void CalculateFitness();
+  double CalculateFitness(std::vector<int> x, std::vector<int> y);
 };

@@ -13,6 +13,9 @@ test_clean:
 Algorithm.o: $(TSP_DIR)/Algorithm.cpp $(TSP_DIR)/Algorithm.h
 	g++ -c -I$(TSP_DIR) $(TSP_DIR)/Algorithm.cpp -std=c11
 
+TabuSearchAlgorithm.o: $(TSP_DIR)/TabuSearchAlgorithm.cpp $(TSP_DIR)/TabuSearchAlgorithm.h
+	g++ -c -I$(TSP_DIR) $(TSP_DIR)/TabuSearchAlgorithm.cpp -std=c11
+
 GeneticAlgorithm.o: $(TSP_DIR)/GeneticAlgorithm.cpp $(TSP_DIR)/GeneticAlgorithm.h
 	g++ -c -I$(TSP_DIR) $(TSP_DIR)/GeneticAlgorithm.cpp -std=c11
 
@@ -28,8 +31,8 @@ Program.o: $(SRC_DIR)/Program.cpp $(SRC_DIR)/Program.h
 Main.o: $(SRC_DIR)/Main.cpp
 	g++ -c -I$(SRC_DIR) $(SRC_DIR)/Main.cpp
 
-Main: $(SRC_DIR)/Main.o $(SRC_DIR)/Program.o $(TSP_DIR)/GeneticAlgorithm.o $(TSP_DIR)/Algorithm.o $(STRUCT_DIR)/MatrixGraph.o $(STRUCT_DIR)/TabuList.o
-	g++ -I$(SRC_DIR) $(SRC_DIR)/Main.o $(SRC_DIR)/Program.o $(TSP_DIR)/GeneticAlgorithm.o $(TSP_DIR)/Algorithm.o $(STRUCT_DIR)/MatrixGraph.o $(STRUCT_DIR)/TabuList.o -o $(OUT)
+Main: $(SRC_DIR)/Main.o $(SRC_DIR)/Program.o $(TSP_DIR)/GeneticAlgorithm.o $(TSP_DIR)/TabuSearchAlgorithm.o $(TSP_DIR)/Algorithm.o $(STRUCT_DIR)/MatrixGraph.o $(STRUCT_DIR)/TabuList.o
+	g++ -I$(SRC_DIR) $(SRC_DIR)/Main.o $(SRC_DIR)/Program.o $(TSP_DIR)/GeneticAlgorithm.o $(TSP_DIR)/TabuSearchAlgorithm.o $(TSP_DIR)/Algorithm.o $(STRUCT_DIR)/MatrixGraph.o $(STRUCT_DIR)/TabuList.o -o $(OUT)
 
 clean:
 	rm *.o $(SRC_DIR)/*.o $(TSP_DIR)/*.o $(STRUCT_DIR)/*.o $(OUT)

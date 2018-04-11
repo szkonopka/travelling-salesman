@@ -1,3 +1,4 @@
+#pragma once
 #include <vector>
 #include <algorithm>
 #include "../structures/MatrixGraph.h"
@@ -5,6 +6,10 @@
 #include <ctime>
 #include <random>
 #include <climits>
+
+enum MutationType {
+  Invert, Insert, Swap
+};
 
 class Algorithm {
 protected:
@@ -21,6 +26,7 @@ public:
     this->matrix = matrix;
   }
   virtual void SearchForBestPath() = 0;
+  virtual void InitSolution() = 0;
   int getPivot(int size);
   int getRandNumbBeforePivot(int pivot);
   int getRandomNumbAfterPivot(int pivot);
