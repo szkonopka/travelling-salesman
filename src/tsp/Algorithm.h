@@ -7,11 +7,8 @@
 #include <random>
 #include <climits>
 
-enum MutationType {
-  Invert, Insert, Swap
-};
-
-class Algorithm {
+class Algorithm
+{
 protected:
   template< class RealType = double >
   class uniform_real_distribution;
@@ -22,23 +19,20 @@ protected:
   std::random_device rd;
 public:
   Algorithm() {}
-  Algorithm(MatrixGraph *matrix) {
-    this->matrix = matrix;
-  }
+  Algorithm(MatrixGraph *matrix);
   virtual void SearchForBestPath() = 0;
   virtual void InitSolution() = 0;
+
+  std::vector<int> getBestPath();
+  void DisplaySolution();
+  double getBestDist();
+
+  std::vector<int> GreedySolution();
   int getPivot(int size);
   int getRandNumbBeforePivot(int pivot);
   int getRandomNumbAfterPivot(int pivot);
-  std::vector<int> getBestPath();
-  double getBestDist();
   int CalculateDistance(std::vector<int> order);
   int IndexOf(std::vector<int> vec, int value);
-  void Swap(std::vector<int> &individual, int indexA, int indexB);
-  void Insert(std::vector<int> &individual, int indexA, int indexB);
-  void Invert(std::vector<int> &individual, int indexA, int indexB);
   bool IsValueInVector(std::vector<int> vec, int value);
-  std::vector<int> GreedySolution();
   double RandomFromZeroToOne();
-  void DisplaySolution();
 };

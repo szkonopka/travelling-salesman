@@ -1,4 +1,5 @@
 #include "Algorithm.h"
+#include "./helpers/Metaheuristic.h"
 #include <iostream>
 
 struct Individual {
@@ -25,9 +26,10 @@ enum PopulationInitType {
   FromGreedy, SimilarOrdered, Random, Mixed
 };
 
-class GeneticAlgorithm : virtual public Algorithm {
+class GeneticAlgorithm : public Algorithm, public Metaheuristic
+{
 private:
-  int _populationSize = 100;
+  int _populationSize = 1000;
   int _generationsAmount = 100000;
   double _mutationRate;
   double _crossoverRate;
@@ -36,7 +38,6 @@ private:
   int _crossoverType = CrossoverType::CX;
   int _mutationType = MutationType::Swap;
   int _populationInitType = PopulationInitType::SimilarOrdered;
-  void InitPopulation();
   void CalculateFitness();
   void NormalizeFitness();
   void GenerateNewPopulation();
@@ -47,7 +48,9 @@ public:
     _mutationRate = mutationRate;
     _crossoverRate = crossoverRate;
   }
+
   virtual void SearchForBestPath();
+  virtual void InitSolution();
   std::vector<int> OrderCrossover(std::vector<int> firstParent, std::vector<int> secondParent);
   std::vector<int> CycleCrossover(std::vector<int> firstParent, std::vector<int> secondParent);
   std::vector<int> PartiallyMatchedCrossover(std::vector<int> firstParent, std::vector<int> secondParent);

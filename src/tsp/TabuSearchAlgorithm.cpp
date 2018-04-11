@@ -10,18 +10,27 @@ void TabuSearchAlgorithm::SearchForBestPath()
 
   optimalPath = _bestPath;
   optimalDist = _bestDist;
-
+  int iterationNumber = 0;
   for(int i = 0; i < _stepsAmount; i++)
   {
     optimalPath = NewNeighborhood(optimalPath);
-    optimalDist = CalculateDistance(optimalPath);
 
+    if(iterationNumber >= _criticalIterations)
+    {
+      Diversification(optimalPath, i);
+      iterationNumber = 0;
+    }
+
+    optimalDist = CalculateDistance(optimalPath);
     if(optimalDist < _bestDist)
     {
       _bestDist = optimalDist;
       _bestPath = optimalPath;
       std::cout << optimalDist << std::endl;
-      DisplaySolution();
+    }
+    else
+    {
+      iterationNumber++;
     }
   }
 }
@@ -33,6 +42,7 @@ void TabuSearchAlgorithm::InitSolution()
     _bestPath.push_back(i);
   }
 
+  _bestPath = GreedySolution();
   _bestDist = CalculateDistance(_bestPath);
 }
 
@@ -66,7 +76,7 @@ std::vector<int> TabuSearchAlgorithm::NewNeighborhood(std::vector<int> solution)
       }
 
       temporarySolutionFitness = CalculateFitness(solution, temporarySolution);
-
+      _bestPathFitness = CalculateFitness(solution, solution);
       if(((temporarySolutionFitness > _bestPathFitness) || firstNeighbor) && !_tabuList -> getMoveTenure(i, j))
       {
         firstNeighbor = false;
@@ -86,9 +96,9 @@ std::vector<int> TabuSearchAlgorithm::NewNeighborhood(std::vector<int> solution)
   return newSolution;
 }
 
-void TabuSearchAlgorithm::Diversification()
+void TabuSearchAlgorithm::Diversification(std::vector<int> &solution, int i)
 {
-
+  std::random_shuffle(solution.begin(), solution.end());
 }
 
 double TabuSearchAlgorithm::CalculateFitness(std::vector<int> x, std::vector<int> y)

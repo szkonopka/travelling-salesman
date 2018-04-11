@@ -3,7 +3,7 @@
 
 void GeneticAlgorithm::SearchForBestPath()
 {
-  InitPopulation();
+  InitSolution();
 
   for(int i = 0; i < _generationsAmount; i++)
   {
@@ -13,7 +13,7 @@ void GeneticAlgorithm::SearchForBestPath()
   }
 }
 
-void GeneticAlgorithm::InitPopulation()
+void GeneticAlgorithm::InitSolution()
 {
   Individual tempIndividual, tempGreedyIndividual;
 
